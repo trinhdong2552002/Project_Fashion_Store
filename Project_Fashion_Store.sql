@@ -6,6 +6,11 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Cấu trúc bảng cho bảng `authority`
 --
@@ -69,21 +74,6 @@ CREATE TABLE `category` (
   `name` varchar(255) DEFAULT NULL,
   `category_parent` bigint DEFAULT NULL,
   `is_primary` bit(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `chatting`
---
-
-CREATE TABLE `chatting` (
-  `id` bigint NOT NULL,
-  `content` varchar(255) DEFAULT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `receiver` bigint DEFAULT NULL,
-  `sender` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -11835,13 +11825,7 @@ ALTER TABLE `category`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKr1xsxlrwmvkn7l7tvhhhbfk6n` (`category_parent`);
 
---
--- Chỉ mục cho bảng `chatting`
---
-ALTER TABLE `chatting`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKfaewt5773gq00mr4rlgkvb3hi` (`receiver`),
-  ADD KEY `FKmiq947q3icuu8tlfjknw8uwih` (`sender`);
+
 
 --
 -- Chỉ mục cho bảng `districts`
@@ -12002,12 +11986,6 @@ ALTER TABLE `category`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT cho bảng `chatting`
---
-ALTER TABLE `chatting`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
 -- AUTO_INCREMENT cho bảng `districts`
 --
 ALTER TABLE `districts`
@@ -12137,12 +12115,7 @@ ALTER TABLE `blog`
 ALTER TABLE `category`
   ADD CONSTRAINT `FKr1xsxlrwmvkn7l7tvhhhbfk6n` FOREIGN KEY (`category_parent`) REFERENCES `category` (`id`);
 
---
--- Các ràng buộc cho bảng `chatting`
---
-ALTER TABLE `chatting`
-  ADD CONSTRAINT `FKfaewt5773gq00mr4rlgkvb3hi` FOREIGN KEY (`receiver`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `FKmiq947q3icuu8tlfjknw8uwih` FOREIGN KEY (`sender`) REFERENCES `users` (`id`);
+
 
 --
 -- Các ràng buộc cho bảng `districts`
@@ -12241,3 +12214,7 @@ ALTER TABLE `user_address`
 ALTER TABLE `wards`
   ADD CONSTRAINT `FK44fn44vepk1iu1es803kydx3g` FOREIGN KEY (`districts_id`) REFERENCES `districts` (`id`);
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

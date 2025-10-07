@@ -18,7 +18,7 @@ async function loadCategory(page, param) {
         main += `<tr>
                     <td>${list[i].id}</td>
                     <td><img class="imgcate" src="${list[i].imageBanner}"></td>
-                    <td>${list[i].name} ${list[i].isPrimary==true?'<span class="dmchinh"> <i class="fa fa-check-circle"></i> danh mục chính</span>':''}</td>
+                    <td>${list[i].name} ${list[i].isPrimary==true?'<span class="dmchinh"> <i class="fa fa-check-circle"></i> Danh mục chính</span>':''}</td>
                     <td>${list[i].categoryParentName == null?'':list[i].categoryParentName}</td>
                     <td class="sticky-col">
                         <i onclick="deleteCategory(${list[i].id})" class="fa fa-trash-alt iconaction"></i>
