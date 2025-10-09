@@ -30,12 +30,28 @@ async function loadAllUser(page, param) {
   for (i = 0; i < listUser.length; i++) {
     var btn = "";
     if (listUser[i].actived == 0) {
-      var btn = `<td class="sticky-col"><button onclick="lockOrUnlock(${listUser[i].id},0)" class="btn btn-danger"><i class="fa fa-unlock"></i> Mở khóa</button></td>`;
+      var btn = `
+      <td class="">
+        <div class="d-flex justify-content-start align-items-center">
+           <button onclick="lockOrUnlock(${listUser[i].id},0)" class="btn btn-danger" >
+            <i class="fa fa-lock"></i>
+            Mở khoá
+           </button>
+        </div>
+      </td>
+      `;
     } else {
-      var btn = `<td class="sticky-col"><button onclick="lockOrUnlock(${listUser[i].id},1)" class="btn btn-primary"><i class="fa fa-lock"></i> Khóa</button></td>`;
+      var btn = `
+      <td class="">
+        <div class="d-flex justify-content-start align-items-center">
+           <button onclick="lockOrUnlock(${listUser[i].id},1)" class="btn btn-primary" ><i class="fa fa-lock"></i> Khóa
+           </button>
+        </div>
+      </td>
+      `;
     }
     if (listUser[i].authorities.name == "ROLE_ADMIN") {
-      btn = '<td class="sticky-col"></td>';
+      btn = '<td class=""></td>';
     }
     main += `<tr>
                     <td>${listUser[i].id}</td>
