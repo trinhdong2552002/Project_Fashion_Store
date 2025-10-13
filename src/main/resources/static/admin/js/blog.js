@@ -76,7 +76,7 @@ async function saveBlog() {
     if (response.status < 300) {
         swal({
                 title: "Thông báo",
-                text: "thêm/sửa blog thành công!",
+                text: "Thêm/sửa blog thành công!",
                 type: "success"
             },
             function() {

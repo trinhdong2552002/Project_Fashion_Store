@@ -89,89 +89,66 @@
       <div id="layoutSidenav_nav"></div>
       <div id="layoutSidenav_content">
         <main class="main">
-          <div class="col-sm-12 header-sp">
-            <div class="row">
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="col-md-3 col-sm-12">
-                  <a href="addproduct" class="btn btn-primary"
-                    ><i class="fa fa-plus"></i> Thêm sản phẩm</a
-                  >
-                </div>
-                <div class="col-md-3 col-sm-6 col-6">
-                  <div class="d-flex flex-row align-items-center">
-                    <select
-                      id="listdpar"
-                      class="form-control"
-                      multiple
-                      style="width: 100%"
-                    ></select>
-
-                    <button
-                      onclick="filterByCate()"
-                      class="d-flex flex-row align-items-center btn btn-primary ml-2"
-                    >
-                      <i class="fa fa-filter"></i>
-                      <p class="ml-2 mb-0">Lọc</p>
-                    </button>
-                  </div>
-                </div>
-              </div>
+        <div class="col-sm-12 header-sp">
+        <div class="row g-3 align-items-center justify-content-between mb-3">
+            <div class="col-12 col-md-3">
+                <a href="addproduct" class="btn btn-primary w-80"><i class="fa fa-plus"></i> Thêm sản phẩm</a>
             </div>
-          </div>
-          <div class="col-sm-12 col-md-6 col-lg-3">
-            <div class="row">
-              <div class="input-group mb-3">
-                <input
-                  onkeyup="loadProduct(0,this.value,null)"
-                  id="searchtable"
-                  placeholder="Tìm kiếm"
-                  class="form-control"
-                />
-              </div>
+            <div class="col-12 col-md-6 col-lg-4 d-flex align-items-center">
+                <select id="listdpar" class="form-control me-2 flex-grow-1" multiple></select>
+                <button onclick="filterByCate()" class="btn btn-primary d-flex align-items-center ms-2"><i class="fa fa-filter me-2"></i> Lọc</button>
             </div>
-          </div>
-          <div class="col-sm-12">
-            <div class="wrapper">
-              <table class="table table-striped tablefix">
-                <thead class="thead-tablefix">
-                  <tr>
-                    <th>id</th>
-                    <th>Ảnh</th>
-                    <th>Mã</th>
-                    <th>Danh mục</th>
-                    <th>Tên</th>
-                    <th>Giá</th>
-                    <th>Ngày tạo</th>
-                    <th>Số lượng bán</th>
-                    <th class="sticky-col">Hành động</th>
-                  </tr>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="input-group mb-3">
+                    <input onkeyup="loadProduct(0, this.value, null)" id="searchtable" placeholder="Tìm kiếm" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Ảnh</th>
+                        <th>Mã</th>
+                        <th>Danh mục</th>
+                        <th>Tên</th>
+                        <th>Giá</th>
+                        <th>Ngày tạo</th>
+                        <th>Số lượng bán</th>
+                        <th class="sticky-col">Hành động</th>
+                    </tr>
                 </thead>
                 <tbody id="listproduct">
-                  <tr>
-                    <td>#2342</td>
-                    <td><img src="" style="width: 100px" /></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="sticky-col">
-                      <i class="fa fa-trash-alt iconaction"></i>
-                      <i class="fa fa-edit iconaction"></i><br />
-                    </td>
-                  </tr>
+                    <tr>
+                        <td>#2342</td>
+                        <td><img src="" style="width: 100px" /></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="sticky-col">
+                            <i class="fa fa-trash-alt iconaction"></i>
+                            <i class="fa fa-edit iconaction"></i><br />
+                        </td>
+                    </tr>
                 </tbody>
-              </table>
-            </div>
-            <nav aria-label="Page navigation example">
-              <ul class="pagination" id="pageable">
+            </table>
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pageable">
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">3</a></li>
-              </ul>
-            </nav>
-          </div>
+            </ul>
+        </nav>
+    </div>
         </main>
       </div>
     </div>
