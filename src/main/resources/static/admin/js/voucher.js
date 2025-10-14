@@ -108,7 +108,7 @@ async function saveVoucher() {
     if (response.status < 300) {
         swal({
                 title: "Thông báo",
-                text: "thêm/sửa voucher thành công!",
+                text: "Thêm/sửa voucher thành công!",
                 type: "success"
             },
             function() {

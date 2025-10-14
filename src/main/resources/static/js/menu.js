@@ -16,7 +16,7 @@ async function loadMenu() {
     }
   }
   var menu = `
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg mt-2">
         <div class="container-fluid">
             <a class="navbar-brand d-none d-lg-block" href="/">
                 <h1 style="font-weight: bold; font-size: 2rem; margin: 0; font-family: "SVN-Gilroy;">FASHION STORE</h1>

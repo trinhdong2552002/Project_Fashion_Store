@@ -105,7 +105,7 @@ async function regis() {
     if (response.status < 300) {
         swal({
                 title: "Thông báo",
-                text: "đăng ký thành công! hãy check email của bạn!",
+                text: "Đăng ký thành công! hãy check email của bạn!",
                 type: "success"
             },
             function() {

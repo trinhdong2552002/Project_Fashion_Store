@@ -123,7 +123,7 @@ async function deleteBlog(id) {
     if (response.status < 300) {
         swal({
                 title: "Thông báo",
-                text: "xóa bài viết thành công!",
+                text: "Xóa bài viết thành công!",
                 type: "success"
             },
             function() {
