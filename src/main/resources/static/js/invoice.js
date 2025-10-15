@@ -95,7 +95,7 @@ async function loadDetailInvoice(id) {
     });
     var result = await resp.json();
     document.getElementById("ngaytaoinvoice").innerHTML = result.createdTime+" " + result.createdDate 
-    document.getElementById("trangthaitt").innerHTML = result.payType!="PAYMENT_DELIVERY"?"Đã thanh toán":"Thanh toán khi nhận hàng"
+    document.getElementById("trangthaitt").innerHTML = result.payType!="PAYMENT_DELIVERY"?"Đã thanh toán":"Thanh toán khi nhận hàng (COD)"
     document.getElementById("loaithanhtoan").innerHTML = result.payType=="PAYMENT_MOMO"?"Thanh toán qua momo":"Thanh toán khi nhận hàng (COD)"
     document.getElementById("loaithanhtoan").innerHTML = result.payType=="PAYMENT_VNPAY"?"Thanh toán qua vnpay":"Thanh toán khi nhận hàng (COD)"
     document.getElementById("ttvanchuyen").innerHTML = result.status.name

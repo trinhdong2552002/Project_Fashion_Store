@@ -17,16 +17,30 @@ var total = 0;
 var listSize = [];
 
 function loadCartCheckOut() {
-    var listcart = localStorage.getItem("product_cart");
-    if (listcart == null) {
-        alert("Bạn chưa có sản phẩm nào trong giỏ hàng!");
-        window.location.replace("cart");
-        return;
+    // support buy-now flow: prefer 'buy_now' stored temporarily
+    var uls = new URL(document.URL);
+    var isBuyNow = uls.searchParams.get('buyNow') === 'true';
+    var buyNowListRaw = localStorage.getItem('buy_now');
+    var list = null;
+    if (isBuyNow && buyNowListRaw != null) {
+        list = JSON.parse(buyNowListRaw);
+        // if empty fallback to persistent cart
+        if (!Array.isArray(list) || list.length == 0) {
+            list = null;
+        }
     }
-    var list = JSON.parse(localStorage.getItem("product_cart"));
-    if (list.length == 0) {
-        alert("Bạn chưa có sản phẩm nào trong giỏ hàng!");
-        window.location.replace("cart");
+    if (list == null) {
+        var listcart = localStorage.getItem("product_cart");
+        if (listcart == null) {
+            alert("Bạn chưa có sản phẩm nào trong giỏ hàng!");
+            window.location.replace("cart");
+            return;
+        }
+        list = JSON.parse(localStorage.getItem("product_cart"));
+        if (list.length == 0) {
+            alert("Bạn chưa có sản phẩm nào trong giỏ hàng!");
+            window.location.replace("cart");
+        }
     }
     var main = ''
     for (i = 0; i < list.length; i++) {
@@ -121,7 +135,7 @@ async function requestPayMentMomo() {
 
     var urlinit = 'http://localhost:8080/api/urlpayment';
     var paymentDto = {
-        "content": "thanh toán đơn hàng yody",
+        "content": "Thanh toán đơn hàng FASHION STORE",
         "returnUrl": returnurl,
         "notifyUrl": returnurl,
         "codeVoucher": voucherCode,
@@ -139,6 +153,10 @@ async function requestPayMentMomo() {
     var result = await res.json();
     if (res.status < 300) {
         window.open(result.url, '_blank');
+        // clear temporary buy_now after initiating online payment
+        if (localStorage.getItem('buy_now')) {
+            localStorage.removeItem('buy_now');
+        }
     }
     if (res.status == exceptionCode) {
         toastr.warning(result.defaultMessage);
@@ -157,7 +175,7 @@ async function requestPayMentVnpay() {
 
     var urlinit = 'http://localhost:8080/api/vnpay/urlpayment';
     var paymentDto = {
-        "content": "thanh toán đơn hàng yody",
+        "content": "Thanh toán đơn hàng FASHION STORE",
         "returnUrl": returnurl,
         "notifyUrl": returnurl,
         "codeVoucher": voucherCode,
@@ -175,6 +193,10 @@ async function requestPayMentVnpay() {
     var result = await res.json();
     if (res.status < 300) {
         window.open(result.url, '_blank');
+        // clear temporary buy_now after initiating online payment
+        if (localStorage.getItem('buy_now')) {
+            localStorage.removeItem('buy_now');
+        }
     }
     if (res.status == exceptionCode) {
         toastr.warning(result.defaultMessage);
@@ -268,6 +290,10 @@ async function paymentCod() {
                 type: "success"
             },
             function() {
+                // clear temporary buy_now after successful COD order
+                if (localStorage.getItem('buy_now')) {
+                    localStorage.removeItem('buy_now');
+                }
                 window.location.replace("account#invoice")
             });
     }

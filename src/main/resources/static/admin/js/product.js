@@ -179,7 +179,7 @@ async function saveProduct() {
     if (response.status < 300) {
         swal({
                 title: "Thông báo",
-                text: "thêm/sửa sản phẩm thành công",
+                text: "Thêm/sửa sản phẩm thành công",
                 type: "success"
             },
             function() {
@@ -189,7 +189,7 @@ async function saveProduct() {
     } else {
         swal({
                 title: "Thông báo",
-                text: "thêm/sửa sản phẩm thất bại",
+                text: "Thêm/sửa sản phẩm thất bại",
                 type: "error"
             },
             function() {

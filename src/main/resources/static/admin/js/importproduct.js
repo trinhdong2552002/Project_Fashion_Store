@@ -156,7 +156,7 @@ async function saveImportPro() {
     if (response.status < 300) {
         swal({
                 title: "Thông báo",
-                text: "thêm/sửa đơn nhập thành công!",
+                text: "Thêm/sửa đơn nhập thành công!",
                 type: "success"
             },
             function() {

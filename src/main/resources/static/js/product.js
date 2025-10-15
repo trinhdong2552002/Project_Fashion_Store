@@ -102,6 +102,50 @@ async function loadAProduct() {
         document.getElementById("btnaddcart").onclick = function() {
             addCart(result);
         }
+        // "Buy now" button: add to cart and redirect to checkout
+        var btnMuaNgay = document.getElementById("btnmuangay");
+        if (btnMuaNgay) {
+            btnMuaNgay.onclick = function (e) {
+                // Build buy-now item (do not touch persistent 'product_cart')
+                var sizeId = null;
+                try {
+                    sizeId = document.querySelector('input[name="sizepro"]:checked').value;
+                } catch (error) {
+                    toastr.error("Bạn chưa chọn kích thước sản phẩm");
+                    return;
+                }
+                var color = null;
+                var size = null;
+                var listColor = result.productColors;
+                for (i = 0; i < listColor.length; i++) {
+                    if (listColor[i].id == idColorCart) {
+                        color = listColor[i];
+                    }
+                }
+                if (!color) {
+                    toastr.error("Bạn chưa chọn màu sản phẩm");
+                    return;
+                }
+                var listSize = color.productSizes;
+                for (i = 0; i < listSize.length; i++) {
+                    if (listSize[i].id == sizeId) {
+                        size = listSize[i];
+                    }
+                }
+                var obj = {
+                    product: result,
+                    color: color,
+                    size: size,
+                    quantiy: document.getElementById("inputslcart").value,
+                };
+                // store in temporary buy_now key and redirect to checkout which will prefer buy_now
+                window.localStorage.setItem('buy_now', JSON.stringify([obj]));
+                setTimeout(function () {
+                    // indicate buy-now usage via query param (optional) and navigate
+                    window.location.href = 'checkout?buyNow=true';
+                }, 150);
+            }
+        }
         var main = ''
         for (i = 0; i < result.productImages.length; i++) {
             main += `<div class="col-lg-2 col-md-2 col-sm-2 col-2 singdimg">

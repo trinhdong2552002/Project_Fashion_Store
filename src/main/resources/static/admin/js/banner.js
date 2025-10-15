@@ -107,7 +107,7 @@ async function saveBanner() {
         body: JSON.stringify(banner)
     });
     if (response.status < 300) {
-        toastr.success("thêm/sửa banner thành công!");
+        toastr.success("Thêm/sửa banner thành công!");
         loadBanner(0,"");
         $("#addtk").modal('hide');
         clearData();
