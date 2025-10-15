@@ -201,3 +201,18 @@ async function changePassword() {
         toastr.warning(result.defaultMessage);
     }
 }
+function showUserName() {
+    const userJson = localStorage.getItem("user");
+    const userNameDisplay = document.getElementById("userNameDisplay");
+    const avatarUser = document.getElementById("avatarUser");
+
+    if (userJson) {
+        const user = JSON.parse(userJson);
+        if (userNameDisplay) {
+            userNameDisplay.textContent = user.fullname || user.username || "Người dùng";
+        }
+        if (avatarUser && user.avatar) {
+            avatarUser.src = user.avatar;
+        }
+    }
+}
