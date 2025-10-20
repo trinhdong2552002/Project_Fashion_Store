@@ -58,8 +58,7 @@ public class ProductServiceImp implements ProductService {
     @Autowired
     private InvoiceDetailRepository invoiceDetailRepository;
 
-    @Autowired
-    private ImportProductRepository importProductRepository;
+ 
 
     @Autowired
     private CommonPage commonPage;
@@ -194,7 +193,6 @@ public class ProductServiceImp implements ProductService {
             productRepository.delete(exist.get());
         }
         else{
-            importProductRepository.deleteByProduct(idProduct);
             productSizeRepository.deleteByProduct(idProduct);
             productRepository.delete(exist.get());
         }

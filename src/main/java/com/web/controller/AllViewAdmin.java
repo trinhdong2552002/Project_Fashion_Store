@@ -19,11 +19,6 @@ public class AllViewAdmin {
         return "admin/addcategory.html";
     }
 
-    @RequestMapping(value = {"/addimportproduct"}, method = RequestMethod.GET)
-    public String addimportproduct() {
-        return "admin/addimportproduct.html";
-    }
-
     @RequestMapping(value = {"/addproduct"}, method = RequestMethod.GET)
     public String addproduct() {
         return "admin/addproduct.html";
@@ -57,11 +52,6 @@ public class AllViewAdmin {
     @RequestMapping(value = {"/doanhthu"}, method = RequestMethod.GET)
     public String doanhthu() {
         return "admin/doanhthu.html";
-    }
-
-    @RequestMapping(value = {"/importproduct"}, method = RequestMethod.GET)
-    public String importproduct() {
-        return "admin/importproduct.html";
     }
 
     @RequestMapping(value = {"/index"}, method = RequestMethod.GET)

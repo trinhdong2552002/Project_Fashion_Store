@@ -32,18 +32,36 @@ async function addCart(product) {
     var listproduct = [];
     listproduct.push(obj);
     window.localStorage.setItem("product_cart", JSON.stringify(listproduct));
+    // notify UI immediately
+    if (typeof loadCartMenu === "function") {
+      try {
+        loadCartMenu();
+      } catch (e) {}
+    }
+    toastr.success("Thêm giỏ hàng thành công");
     return;
   } else {
     var list = JSON.parse(localStorage.getItem("product_cart"));
     console.log(list);
     for (i = 0; i < list.length; i++) {
       if (Number(list[i].size.id) == Number(sizeId)) {
+        // Already exists: keep behavior (no duplicate add), still refresh counters
+        if (typeof loadCartMenu === "function") {
+          try {
+            loadCartMenu();
+          } catch (e) {}
+        }
         toastr.success("Thêm giỏ hàng thành công");
         return;
       }
     }
     list.push(obj);
     window.localStorage.setItem("product_cart", JSON.stringify(list));
+    if (typeof loadCartMenu === "function") {
+      try {
+        loadCartMenu();
+      } catch (e) {}
+    }
     toastr.success("Thêm giỏ hàng thành công");
   }
 }
@@ -101,6 +119,12 @@ async function loadAllCart() {
   loadAllCartMobile();
   document.getElementById("slcart").innerHTML = list.length;
   document.getElementById("tonggiatien").innerHTML = formatmoney(total);
+  // Update header badges as well
+  if (typeof loadCartMenu === "function") {
+    try {
+      loadCartMenu();
+    } catch (e) {}
+  }
 }
 
 async function loadAllCartMobile() {

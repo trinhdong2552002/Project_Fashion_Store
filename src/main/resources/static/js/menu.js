@@ -1,6 +1,20 @@
 var token = localStorage.getItem("token");
 const exceptionCode = 417;
 var tokenFcm = "";
+// Configure Toastr globally (top-center notifications)
+(function () {
+  if (typeof toastr !== "undefined") {
+    toastr.options = {
+      positionClass: "toast-top-center",
+      closeButton: true,
+      progressBar: true,
+      newestOnTop: true,
+      timeOut: 2000,
+      extendedTimeOut: 1500,
+      preventDuplicates: true,
+    };
+  }
+})();
 async function loadMenu() {
   var dn = `<span class="nav-item dropdown pointermenu gvs">
                 <i class="fa fa-user" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Tài khoản</i>
@@ -24,10 +38,17 @@ async function loadMenu() {
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>   
-            <a class="navbar-brand navbar-toggler" href="index"><img style="width: 70px;" src="image/logo.png"></a>
-            <span>
-                <i data-bs-toggle="modal" data-bs-target="#modalsearch" class="fa fa-search navbar-toggler"></i>
-                <i class="fa fa-shopping-bag navbar-toggler"> <span id="slcartmenusm" class="slcartmenusm">0</span></i>
+            <a class="navbar-brand navbar-toggler" href="index">
+              <h1 style="font-weight: bold; font-size: 2rem; margin: 0; font-family: "SVN-Gilroy;">FASHION STORE</h1>
+            </a>
+            <span class="d-flex align-items-center gap-3">
+              <a href="#" data-bs-toggle="modal" data-bs-target="#modalsearch" class="navbar-toggler text-decoration-none" aria-label="Tìm kiếm">
+                <i class="fa fa-search"></i>
+              </a>
+              <a href="cart" class="navbar-toggler position-relative text-decoration-none" aria-label="Giỏ hàng">
+                <i class="fa fa-shopping-bag"></i>
+                <span id="slcartmenusm" class="slcartmenusm">0</span>
+              </a>
             </span>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mainmenut">
@@ -221,13 +242,20 @@ function formatmoney(money) {
 }
 
 async function loadCartMenu() {
-  var listcart = localStorage.getItem("product_cart");
-  if (listcart == null) {
-    return;
+  try {
+    var listcart = localStorage.getItem("product_cart");
+    var count = 0;
+    if (listcart != null) {
+      var list = JSON.parse(listcart);
+      count = Array.isArray(list) ? list.length : 0;
+    }
+    var smEl = document.getElementById("slcartmenusm");
+    if (smEl) smEl.innerHTML = count;
+    var lgEl = document.getElementById("slcartmenu");
+    if (lgEl) lgEl.innerHTML = count;
+  } catch (e) {
+    // no-op: leave default 0 if any parsing error
   }
-  var list = JSON.parse(localStorage.getItem("product_cart"));
-  document.getElementById("slcartmenusm").innerHTML = list.length;
-  document.getElementById("slcartmenu").innerHTML = list.length;
 }
 
 var stompClient = null;
