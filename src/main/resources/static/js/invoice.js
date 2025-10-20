@@ -108,7 +108,7 @@ async function loadDetailInvoice(id) {
 }
 
 async function cancelInvoice(id) {
-    var con = confirm("xác nhận hủy đơn hàng này");
+    var con = confirm("Xác nhận hủy đơn hàng này");
     if(con == false){
         return;
     }

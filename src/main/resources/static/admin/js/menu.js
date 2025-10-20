@@ -29,10 +29,6 @@ $(document).ready(function () {
                 <div class="sb-nav-link-icon"><i class="fa fa-shopping-cart iconmenu"></i></div>
                 Đơn hàng
             </a>
-            <a class="nav-link" href="importproduct">
-                <div class="sb-nav-link-icon"><i class="fas fa-file iconmenu"></i></div>
-                Nhập hàng
-            </a>
             <a class="nav-link" href="voucher">
                 <div class="sb-nav-link-icon"><i class="fa fa-ticket-alt iconmenu"></i></div>
                 Voucher
