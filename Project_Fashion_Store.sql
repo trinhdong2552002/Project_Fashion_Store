@@ -818,25 +818,6 @@ CREATE TABLE `history_pay` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `import_product`
---
-
-CREATE TABLE `import_product` (
-  `id` bigint NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `import_date` date DEFAULT NULL,
-  `import_price` double DEFAULT NULL,
-  `import_time` time DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  `product_size_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
-
 -- --------------------------------------------------------
 
 --
@@ -11841,12 +11822,6 @@ ALTER TABLE `history_pay`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK3uqapx8urdm829chr0p30d0y2` (`invoice_id`);
 
---
--- Chỉ mục cho bảng `import_product`
---
-ALTER TABLE `import_product`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKq2e769vv5r8xr5y461jiuww1s` (`product_size_id`);
 
 --
 -- Chỉ mục cho bảng `invoice`
@@ -11997,11 +11972,6 @@ ALTER TABLE `districts`
 ALTER TABLE `history_pay`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
---
--- AUTO_INCREMENT cho bảng `import_product`
---
-ALTER TABLE `import_product`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `invoice`
@@ -12129,11 +12099,6 @@ ALTER TABLE `districts`
 ALTER TABLE `history_pay`
   ADD CONSTRAINT `FK3uqapx8urdm829chr0p30d0y2` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`);
 
---
--- Các ràng buộc cho bảng `import_product`
---
-ALTER TABLE `import_product`
-  ADD CONSTRAINT `FKq2e769vv5r8xr5y461jiuww1s` FOREIGN KEY (`product_size_id`) REFERENCES `product_size` (`id`);
 
 --
 -- Các ràng buộc cho bảng `invoice`
