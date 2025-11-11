@@ -90,6 +90,31 @@ public class UserApi {
         return new ResponseEntity<>("kích hoạt thành công", HttpStatus.OK);
     }
 
+@GetMapping("/user/profile")
+public ResponseEntity<UserDto> getUserProfile() {
+    User user = userUtils.getUserWithAuthority();
+    if (user == null) {
+        throw new MessageException("Không tìm thấy người dùng");
+    }
+    return ResponseEntity.ok(userMapper.userToUserDto(user));
+}
+    @PutMapping("/user/update-info")
+public ResponseEntity<?> updateUserInfo(@RequestBody UserRequest userRequest) {
+    User user = userUtils.getUserWithAuthority();
+    if (user == null) {
+        throw new MessageException("Không tìm thấy người dùng");
+    }
+
+    user.setFullname(userRequest.getFullname());
+    user.setPhone(userRequest.getPhone());
+    user.setGender(userRequest.getGender());
+    user.setBirthdate(userRequest.getBirthdate());
+
+    userRepository.save(user);
+    return new ResponseEntity<>(userMapper.userToUserDto(user), HttpStatus.OK);
+}
+
+
     @PostMapping("/user/change-password")
     public ResponseEntity<?> changePassword(@RequestBody PasswordDto passwordDto){
         userService.changePass(passwordDto.getOldPass(), passwordDto.getNewPass());

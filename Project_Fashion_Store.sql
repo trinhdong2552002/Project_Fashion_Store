@@ -1103,7 +1103,9 @@ CREATE TABLE `users` (
   `username` varchar(255) DEFAULT NULL,
   `authority_name` varchar(255) DEFAULT NULL,
   `token_fcm` varchar(255) DEFAULT NULL,
-  `user_type` varchar(255) DEFAULT NULL
+  `user_type` varchar(255) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --

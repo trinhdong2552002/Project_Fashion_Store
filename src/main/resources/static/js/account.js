@@ -201,3 +201,138 @@ async function changePassword() {
         toastr.warning(result.defaultMessage);
     }
 }
+
+async function updateUserInfo() {
+    var token = localStorage.getItem("token");
+    var user = JSON.parse(localStorage.getItem("user"));
+
+    var fullname = document.getElementById("fullname").value;
+    var phone = document.getElementById("phone").value;
+    var gender = document.getElementById("gender").value;
+    var birthdate = document.getElementById("birthdate").value; // yyyy-mm-dd
+    var email = user.email; // lấy từ user đang đăng nhập
+
+    var updatedUser = {
+        fullname: fullname,
+        phone: phone,
+        gender: gender,
+        birthdate: birthdate,
+        email: email
+    };
+
+    const response = await fetch('http://localhost:8080/api/user/update-info', {
+        method: 'PUT',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(updatedUser)
+    });
+
+    if (response.status < 300) {
+        swal({
+            title: "Thành công",
+            text: "Cập nhật thông tin người dùng thành công!",
+            type: "success"
+        }, function() {
+            window.location.reload();
+        });
+    } else {
+        var result = await response.json();
+        toastr.warning(result.defaultMessage || "Cập nhật thất bại!");
+    }
+}
+
+
+async function loadUserInfo() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        toastr.error("Vui lòng đăng nhập!");
+        window.location.href = "login";
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:8080/api/user/profile', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+
+        if (response.ok) {
+            const user = await response.json();
+
+            
+            localStorage.setItem("user", JSON.stringify(user));
+
+            
+            document.getElementById("fullname").value = user.fullname || "";
+            document.getElementById("email").value = user.email || "";
+            document.getElementById("phone").value = user.phone || "";
+
+            
+            const genderSelect = document.getElementById("gender");
+            if (user.gender && ["Nam", "Nữ", "Khác"].includes(user.gender.trim())) {
+                genderSelect.value = user.gender.trim();
+            } else {
+                genderSelect.value = "";
+            }
+
+            
+            const birthdateInput = document.getElementById("birthdate");
+            if (user.birthdate) {
+                
+                birthdateInput.value = user.birthdate;
+            } else {
+                birthdateInput.value = "";
+            }
+
+        } else {
+            toastr.error("Không thể tải thông tin người dùng");
+        }
+    } catch (error) {
+        console.error("Lỗi kết nối:", error);
+        toastr.error("Lỗi server");
+    }
+}
+
+async function updateUserInfo() {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    const updatedUser = {
+        fullname: document.getElementById("fullname").value,
+        phone: document.getElementById("phone").value,
+        gender: document.getElementById("gender").value,
+        birthdate: document.getElementById("birthdate").value,
+        email: user.email
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/api/user/update-info', {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedUser)
+        });
+
+        if (response.ok) {
+            toastr.success("Cập nhật thông tin thành công!");
+            loadUserInfo(); 
+        } else {
+            const err = await response.json();
+            toastr.error(err.defaultMessage || "Cập nhật thất bại");
+        }
+    } catch (error) {
+        toastr.error("Lỗi kết nối server");
+    }
+}
+
+window.addEventListener("load", function() {
+    loadMenu();
+    loadAddress();
+    loadAddressUser();
+    loadMyInvoice();
+    loadUserInfo(); 
+});

@@ -33,5 +33,9 @@ public class UserDto {
     private String tokenFcm;
 
     private Authority authorities;
+
+    private String gender;
+    
+    private Date birthdate;
 }
 
