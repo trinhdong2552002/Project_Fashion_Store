@@ -44,7 +44,11 @@
                         <div class="col-lg-12 col-md-12 col-sm-6 col-6">
                             <div class="avaaccount">
                                 <img src="image/avatar.webp" class="avataracc">
-                                <button onclick="logout()" class="btnlogoutacc">Đăng xuất</button>
+                                <!-- <button onclick="logout()" class="btnlogoutacc">Đăng xuất</button> -->
+                                <div class="text-center mt-2">
+                                    <p id="userEmailDisplay" class="mb-1 fw-bold text-primary"></p>
+                                    <button onclick="logout()" class="btnlogoutacc btn-sm">Đăng xuất</button>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-6 col-6 sinv">
@@ -234,7 +238,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" placeholder="example@email.com">
+                                        <input type="email" class="form-control" id="email" placeholder="example@email.com" readonly disabled>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Số điện thoại</label>

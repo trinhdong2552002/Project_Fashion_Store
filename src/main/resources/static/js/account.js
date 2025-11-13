@@ -261,39 +261,35 @@ async function loadUserInfo() {
         if (response.ok) {
             const user = await response.json();
 
-            
-            localStorage.setItem("user", JSON.stringify(user));
-
-            
+            // === Điền vào form ===
             document.getElementById("fullname").value = user.fullname || "";
             document.getElementById("email").value = user.email || "";
             document.getElementById("phone").value = user.phone || "";
+            document.getElementById("gender").value = user.gender || "";
+            document.getElementById("birthdate").value = user.birthdate || "";
 
-            
-            const genderSelect = document.getElementById("gender");
-            if (user.gender && ["Nam", "Nữ", "Khác"].includes(user.gender.trim())) {
-                genderSelect.value = user.gender.trim();
-            } else {
-                genderSelect.value = "";
-            }
-
-            
-            const birthdateInput = document.getElementById("birthdate");
-            if (user.birthdate) {
-                
-                birthdateInput.value = user.birthdate;
-            } else {
-                birthdateInput.value = "";
+            // === HIỂN THỊ EMAIL DƯỚI AVATAR ===
+            const emailDisplay = document.getElementById("userEmailDisplay");
+            if (emailDisplay) {
+                emailDisplay.textContent = user.email || "Chưa có email";
             }
 
         } else {
-            toastr.error("Không thể tải thông tin người dùng");
+            toastr.error("Không thể tải thông tin");
         }
     } catch (error) {
-        console.error("Lỗi kết nối:", error);
+        console.error(error);
         toastr.error("Lỗi server");
     }
 }
+
+window.addEventListener("load", function() {
+    loadMenu();
+    loadAddress();
+    loadAddressUser();
+    loadMyInvoice();
+    loadUserInfo(); 
+});
 
 async function updateUserInfo() {
     const token = localStorage.getItem("token");
