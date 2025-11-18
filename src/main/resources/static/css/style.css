@@ -665,7 +665,7 @@ a {
 }
 
 .cartname {
-    text-transform: uppercase!important;
+    text-transform: uppercase !important;
     font-family: 'SVN-Gilroy Bold';
     font-size: 16px;
     border-radius: 4px 4px 0 0;
@@ -934,6 +934,16 @@ tr {
     border-radius: 12px;
     border: none;
     width: 100%;
+}
+
+.btnsave {
+    line-height: 24px;
+    background: #fcaf17;
+    color: #FFF;
+    border-radius: 5px;
+    border: none;
+    padding: 8px 20px;
+    margin-top: 10px;
 }
 
 .sinv {
@@ -1446,9 +1456,9 @@ tr {
 }
 
 .align-items-center {
-    -webkit-box-align: center!important;
-    -ms-flex-align: center!important;
-    align-items: center!important;
+    -webkit-box-align: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
     margin-top: 15px;
 }
 
@@ -2180,7 +2190,7 @@ tr {
     font-weight: bold;
 }
 
-.headersection{
+.headersection {
     background: #fef1d7;
     margin-bottom: 20px;
     display: inline-block;
@@ -2189,7 +2199,7 @@ tr {
     margin-top: 50px;
 }
 
-.headersection h4{
+.headersection h4 {
     padding: 5px 60px 6px 35px;
     margin: 0 0 0 60px;
     background: #00483d;
@@ -2197,18 +2207,21 @@ tr {
     font-size: 14px;
     text-transform: uppercase;
 }
+
 .headersection:after {
     content: " ";
     border-top: 30px solid #00483d;
     border-left: 30px solid #fef1d7;
     margin-left: 40px;
 }
-.xemtatca{
+
+.xemtatca {
     position: relative;
     height: 50px;
     margin-top: 15px;
 }
-.xemtatcabtn{
+
+.xemtatcabtn {
     position: absolute;
     width: 150px;
     left: 0;
@@ -2220,15 +2233,18 @@ tr {
     border-radius: 8px;
     background-color: #fff;
 }
-.blogindex{
+
+.blogindex {
     margin-top: 30px;
 }
-.topblogindex{
+
+.topblogindex {
     border-bottom: 1px solid #dedede;
     display: flex;
     position: relative;
 }
-.xemthemblog{
+
+.xemthemblog {
     position: absolute;
     right: 0;
     color: #E03C31;
@@ -2236,17 +2252,21 @@ tr {
     font-size: 0.9rem;
     top: 10px;
 }
-.listblogindex{
+
+.listblogindex {
     padding-top: 20px;
 }
-.listblogindex{
+
+.listblogindex {
     padding-top: 20px;
 }
-.blogpriimage{
+
+.blogpriimage {
     width: 100%;
     border-radius: 5px;
 }
-.titlepriindex{
+
+.titlepriindex {
     color: #000;
     text-decoration: none;
     display: block;
@@ -2255,19 +2275,22 @@ tr {
     font-weight: bold;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-line-clamp: 2;
+    /* number of lines to show */
     line-clamp: 2;
     -webkit-box-orient: vertical;
 }
-.singleblogindex{
+
+.singleblogindex {
     border-bottom: 1px solid #dedede;
     padding-bottom: 10px;
     padding-top: 10px;
 }
-.singleblogindex a{
+
+.singleblogindex a {
     color: #000;
     text-decoration: none;
-    font-family: "Roboto Regular",Roboto,Arial !important;
+    font-family: "Roboto Regular", Roboto, Arial !important;
     font-size: 16px;
     line-height: 26px;
     font-weight: normal !important;
@@ -2286,6 +2309,7 @@ tr {
     #topmenu {
         display: none;
     }
+
     .content {
         padding-top: 65px;
     }
@@ -2295,18 +2319,21 @@ tr {
     .col-lg-20p {
         width: 20%;
     }
+
     .col-lg-10p {
         width: 10%;
     }
+
     .ddtog:hover>.dropdown-menu {
         display: block !important;
     }
 }
 
-.bannerhot1{
+.bannerhot1 {
     margin-top: 15px;
 }
-.bannerhot1 img{
+
+.bannerhot1 img {
     width: 100%;
     object-fit: cover;
 }
@@ -2316,192 +2343,191 @@ tr {
         padding-left: 10px;
         padding-right: 10px;
     }
+
     .p40 {
         width: 40%;
     }
+
     .p60 {
         width: 60%;
     }
+
     .singledmpro {
         padding: 10px 0px 10px 10px;
     }
+
     .filtersp {
         display: inline;
     }
+
     #sortpro {
         float: left;
     }
+
     .col-filter {
         display: none;
     }
+
     .loginform {
         margin-top: -10px;
     }
+
     .contentlogin {
         background-image: url('') !important;
     }
+
     .inputloginform {
         padding: 0px;
     }
+
     .tablecartmobile {
         display: block;
     }
+
     .tablecart {
         display: none;
     }
+
     .contentcart {
         padding-left: 0px;
         margin-right: 10px;
         background-color: #fff;
     }
+
     .cartbds {
         padding: 0px;
         padding-left: 10px;
         margin-top: 0px;
         margin: 0px;
     }
+
     .collistcart {
         padding: 0px;
     }
+
     .listcart {
         padding: 0px;
         padding-top: 10px;
     }
+
     .ttcart {
         padding: 0px;
     }
+
     .ttcartgy {
         padding-right: 10px;
     }
+
     .colgoiycart {
         padding: 0px;
     }
+
     .navleft {
         padding-bottom: 0px;
     }
+
     #footer {
         margin-right: 15px;
     }
+
     .cartgoiy {
         padding: 0;
     }
+
     .actionacc {
         display: contents;
     }
+
     .modeladdres {
         width: 100vw;
         max-width: none;
         height: 100% !important;
         margin: 0;
     }
+
     #my-orders-table {
         display: none;
     }
+
     #ordermobile {
         display: table;
     }
+
     .theaddetail {
         display: none;
     }
+
     .sldetailacc {
         display: none;
     }
+
     .pricedetailacc {
         display: none;
     }
+
     .slmobile {
         display: block;
     }
+
     .listimgcontent img {
         width: 33.33%;
     }
+
     #checkright {
         order: 1;
     }
+
     .infordoncheck {
         min-height: auto;
     }
+
     .divbefor {
         display: flex !important;
     }
+
     .divafter {
         display: none !important;
     }
+
     #checkleft {
         order: 2;
     }
+
     .checkoutdiv {
         padding: 20px;
     }
+
     .btndathang {
         display: none;
     }
+
     .btndathangmobile {
         display: block;
     }
+
     .bannerimgblog {
         height: auto;
     }
+
     .contentbanner {
         max-width: 100%;
     }
+
     .contentdetailblog {
         background-color: #fff;
     }
+
     .contentdtbg {
         width: 100%;
         background-color: #fff;
         padding: 10px;
     }
+
     .imgbldt {
         width: 100%;
         margin: 0;
         margin-top: 20px;
     }
-}
-
-
-
-
-
-.chat-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.chat-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.chat-box {
-    display: none;
-    width: 300px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    border: 1px solid #ccc;
-}
-
-.chat-header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .close-btn {
@@ -2512,60 +2538,12 @@ tr {
     cursor: pointer;
 }
 
-.chat-body {
-    padding: 10px;
-    height: 400px;
-    overflow-y: scroll;
-}
-
-.chat-footer {
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-}
-
-.chat-footer input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.chat-footer button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-#listchat {
-    font-size: 13px;
-    display: flex;
-    flex-direction: column;
-}
-.mychat{
-    background-color: #0084ff;
-    color: #fff;
-    max-width: 70%;
-    padding: 3px 7px;
-    border-radius: 10px;
-    display: inline-block;
-    align-self: flex-end;
-}
-.adminchat{
-    background-color: #f0f0f0;
-    max-width: 70%;
-    padding: 3px 7px;
-    border-radius: 10px;
-    display: inline-block;
-    align-self: flex-start;
-}
-.parentlogingg{
+.parentlogingg {
     width: 100%;
     position: relative;
     height: 80px;
 }
+
 .logindiv {
     position: absolute;
     top: 10px;

@@ -31,17 +31,17 @@ async function loadMenu() {
   }
   var menu = `
     <nav class="navbar navbar-expand-lg mt-2">
-        <div class="container-fluid">
+        <div class="container-fluid">            
             <a class="navbar-brand d-none d-lg-block" href="/">
                 <h1 style="font-weight: bold; font-size: 2rem; margin: 0; font-family: "SVN-Gilroy;">FASHION STORE</h1>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>   
+            <button class="navbar-toggler p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon p-0"></span>
+            </button>               
             <a class="navbar-brand navbar-toggler" href="index">
-              <h1 style="font-weight: bold; font-size: 2rem; margin: 0; font-family: "SVN-Gilroy;">FASHION STORE</h1>
+              <h1 style="font-weight: bold; font-size: 1.4rem; margin: 0; font-family: "SVN-Gilroy;">FASHION STORE</h1>
             </a>
-            <span class="d-flex align-items-center gap-3">
+            <span class="d-flex align-items-center mt-0">
               <a href="#" data-bs-toggle="modal" data-bs-target="#modalsearch" class="navbar-toggler text-decoration-none" aria-label="Tìm kiếm">
                 <i class="fa fa-search"></i>
               </a>
@@ -76,6 +76,12 @@ async function loadCategoryMenu() {
   const response = await fetch(url, {});
   var list = await response.json();
   var main = "";
+  var menuUl = document.getElementById("mainmenut");
+  if (!menuUl) return;
+  // Clear previously injected dynamic category items to prevent duplication
+  menuUl.querySelectorAll(".nav-item.dropdown.ddtog").forEach(function (el) {
+    el.remove();
+  });
   for (i = 0; i < list.length; i++) {
     main += `<li class="nav-item dropdown ddtog">
         <a class="nav-link menulink ddtog" href="#" id="cate1" role="button" data-bs-toggle="dropdown" aria-expanded="false">${list[i].name}</a>
@@ -88,7 +94,7 @@ async function loadCategoryMenu() {
     main += mainChild;
     main += ` </ul></li>`;
   }
-  document.getElementById("mainmenut").innerHTML += main;
+  menuUl.innerHTML += main;
 }
 
 async function searchMenu() {
@@ -162,10 +168,7 @@ function loadFooter() {
         <div>
         <a href="" class="me-4 text-reset"><i class="fab fa-facebook-f"></i></a>
         <a href="" class="me-4 text-reset"><i class="fab fa-twitter"></i></a>
-        <a href="" class="me-4 text-reset"><i class="fab fa-google"></i></a>
         <a href="" class="me-4 text-reset"><i class="fab fa-instagram"></i></a>
-        <a href="" class="me-4 text-reset"><i class="fab fa-linkedin"></i></a>
-        <a href="" class="me-4 text-reset"><i class="fab fa-github"></i></a>
         </div>
     </section>
     <section class="">
@@ -194,7 +197,7 @@ function loadFooter() {
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
             <h6 class="text-uppercase fw-bold mb-4">Liên hệ</h6>
             <p><i class="fas fa-home me-3"></i> Hồ Chí Minh, Việt Nam</p>
-            <p><i class="fas fa-envelope me-3"></i> shop@gmail.com</p>
+            <p><i class="fas fa-envelope me-3"></i> fashionstore@gmail.com</p>
             <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
             <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
             </div>
