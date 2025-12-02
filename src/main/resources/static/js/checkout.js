@@ -78,10 +78,30 @@ function loadCartCheckOut() {
                     </div>
                 </div>`;
   }
+  // --- NEW LOGIC STARTS HERE ---
+
+  // 1. Calculate Shipping Fee
+  var shippingFee = 20000;
+  if (total >= 500000) {
+    shippingFee = 0;
+  }
+
+  // 2. Update HTML
   document.getElementById("listproductcheck").innerHTML = main;
   document.getElementById("totalAmount").innerHTML = formatmoneyCheck(total);
+  document.getElementById("slcartcheckout").innerHTML = list.length;
+
+  // Update Shipping Fee displays (using the IDs we added in Step 1)
+  if (document.getElementById("shipFee1"))
+    document.getElementById("shipFee1").innerHTML =
+      formatmoneyCheck(shippingFee);
+  if (document.getElementById("shipFee2"))
+    document.getElementById("shipFee2").innerHTML =
+      formatmoneyCheck(shippingFee);
+
+  // 3. Update Final Total (Total + Shipping Fee)
   document.getElementById("totalfi").innerHTML = formatmoneyCheck(
-    total + 20000
+    total + shippingFee
   );
 }
 
