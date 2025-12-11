@@ -26,7 +26,16 @@ async function addCart(product) {
     product: product,
     color: color,
     size: size,
-    quantiy: document.getElementById("inputslcart").value,
+    quantiy: (function () {
+      var q = Number(document.getElementById("inputslcart").value || '1');
+      var max = Number(size.quantity || 0);
+      if (q <= 0) q = 1;
+      if (max > 0 && q > max) {
+        toastr.warning("Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này");
+        q = max;
+      }
+      return q;
+    })(),
   };
   if (localStorage.getItem("product_cart") == null) {
     var listproduct = [];
@@ -94,13 +103,9 @@ async function loadAllCart() {
                       list[i].product.price
                     )}</p></td>
                     <td>
-                        <div class="clusinp"><button onclick="upDownQuantity(${
-                          list[i].size.id
-                        },-1)" class="cartbtn"> - </button>
-                        <input value="${list[i].quantiy}" class="inputslcart">
-                        <button onclick="upDownQuantity(${
-                          list[i].size.id
-                        },1)" class="cartbtn"> + </button></div>
+                        <div class="clusinp"><button onclick="upDownQuantity(${list[i].size.id},-1)" class="cartbtn"> - </button>
+                        <input value="${list[i].quantiy}" class="inputslcart" data-id="${list[i].size.id}" data-max="${Number(list[i].size.quantity || 0)}">
+                        <button onclick="upDownQuantity(${list[i].size.id},1)" class="cartbtn"> + </button></div>
                     </td>
                     <td>
                         <div class="tdpricecart">
@@ -125,6 +130,8 @@ async function loadAllCart() {
       loadCartMenu();
     } catch (e) {}
   }
+  // attach validation for manual typing in desktop and mobile inputs
+  attachCartInputValidation();
 }
 
 async function loadAllCartMobile() {
@@ -148,7 +155,7 @@ async function loadAllCartMobile() {
                 <button onclick="upDownQuantity(${
                   list[i].size.id
                 },-1)" class="cartbtn"> - </button>
-                <input value="${list[i].quantiy}" class="inputslcart">
+                <input value="${list[i].quantiy}" class="inputslcart" data-id="${list[i].size.id}" data-max="${Number(list[i].size.quantity || 0)}">
                 <button onclick="upDownQuantity(${
                   list[i].size.id
                 },1)" class="cartbtn"> + </button>
@@ -179,7 +186,14 @@ function upDownQuantity(idsize, quantiy) {
   var list = JSON.parse(localStorage.getItem("product_cart"));
   for (i = 0; i < list.length; i++) {
     if (list[i].size.id == idsize) {
-      list[i].quantiy = Number(list[i].quantiy) + Number(quantiy);
+      var max = Number(list[i].size.quantity || 0);
+      var next = Number(list[i].quantiy) + Number(quantiy);
+      if (max > 0 && next > max) {
+        toastr.warning("Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này");
+        next = max;
+      }
+      if (next < 0) next = 0; // allow remove by hitting below 1
+      list[i].quantiy = next;
     }
   }
   window.localStorage.setItem("product_cart", JSON.stringify(list));
@@ -188,6 +202,46 @@ function upDownQuantity(idsize, quantiy) {
   var remainingArr = list.filter((data) => data.quantiy != 0);
   window.localStorage.setItem("product_cart", JSON.stringify(remainingArr));
   loadAllCart();
+}
+
+// Clamp manual typed quantity to [1, max] and sync storage
+function attachCartInputValidation() {
+  var inputs = document.querySelectorAll('.inputslcart[data-id]');
+  var handler = function(ev) {
+    var inp = ev.target;
+    var id = Number(inp.getAttribute('data-id'));
+    var max = Number(inp.getAttribute('data-max') || '0');
+    var raw = String(inp.value || '1');
+    var digits = raw.replace(/\D/g, '');
+    if (digits === '') digits = '1';
+    var num = Number(digits);
+    if (num <= 0) num = 1;
+    if (max > 0 && num > max) {
+      num = max;
+      toastr.warning("Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này");
+    }
+    inp.value = String(num);
+    // sync to localStorage
+    var list = JSON.parse(localStorage.getItem('product_cart')) || [];
+    for (var i = 0; i < list.length; i++) {
+      if (Number(list[i].size.id) === id) {
+        list[i].quantiy = num;
+        break;
+      }
+    }
+    window.localStorage.setItem('product_cart', JSON.stringify(list));
+    // update totals without full reload
+    var total = 0;
+    for (var i = 0; i < list.length; i++) {
+      total += Number(list[i].quantiy * list[i].product.price);
+    }
+    var tg = document.getElementById('tonggiatien');
+    if (tg) tg.innerHTML = formatmoney(total);
+  };
+  inputs.forEach(function(input) {
+    input.addEventListener('input', handler);
+    input.addEventListener('blur', handler);
+  });
 }
 
 async function productLqCart() {
