@@ -1,9 +1,21 @@
 var token = localStorage.getItem("token");
-var size = 2;
+// show 10 items per page
+var size = 10;
+
+// track current state for pagination
+var currentPageV = 0;
+var currentStart = null;
+var currentEnd = null;
+
 async function loadVoucher(page, start, end) {
-    var url = 'http://localhost:8080/api/voucher/admin/findAll-page?page=' + page + '&size=' + size;
-    if (start != null && start != "" && end != null && end != "" && start != 'null' && end != 'null') {
-        url += '&start=' + start + '&end=' + end
+    // store current filters
+    currentPageV = page || 0;
+    currentStart = start || null;
+    currentEnd = end || null;
+
+    var url = 'http://localhost:8080/api/voucher/admin/findAll-page?page=' + currentPageV + '&size=' + size;
+    if (currentStart != null && currentStart != "" && currentEnd != null && currentEnd != "" && currentStart != 'null' && currentEnd != 'null') {
+        url += '&start=' + currentStart + '&end=' + currentEnd
     }
     const response = await fetch(url, {
         method: 'GET',
@@ -33,10 +45,19 @@ async function loadVoucher(page, start, end) {
                 </tr>`
     }
     document.getElementById("listvoucher").innerHTML = main
+    // build pagination with prev/next and active page
     var mainpage = ''
+    var prevDisabled = currentPageV <= 0 ? ' disabled' : '';
+    var nextDisabled = currentPageV >= (totalPage - 1) ? ' disabled' : '';
+
+    mainpage += `<li class="page-item${prevDisabled}"><a class="page-link" href="#" onclick="${prevDisabled ? 'return false' : 'loadVoucher(' + (currentPageV - 1) + ', currentStart, currentEnd)'}">&laquo;</a></li>`;
     for (i = 1; i <= totalPage; i++) {
-        mainpage += `<li onclick="loadVoucher(${(Number(i) - 1)},'${start}','${end}')" class="page-item"><a class="page-link" href="#listsp">${i}</a></li>`
+        var pageIndex = i - 1;
+        var active = pageIndex === currentPageV ? ' active' : '';
+        mainpage += `<li class="page-item${active}"><a class="page-link" href="#" onclick="loadVoucher(${pageIndex}, currentStart, currentEnd)">${i}</a></li>`
     }
+    mainpage += `<li class="page-item${nextDisabled}"><a class="page-link" href="#" onclick="${nextDisabled ? 'return false' : 'loadVoucher(' + (currentPageV + 1) + ', currentStart, currentEnd)'}">&raquo;</a></li>`;
+
     document.getElementById("pageable").innerHTML = mainpage
 }
 
@@ -82,6 +103,20 @@ async function saveVoucher() {
     var from = document.getElementById("from").value
     var to = document.getElementById("to").value
     var lockvoucher = document.getElementById("lockvoucher").checked
+
+    // validate inputs before submit
+    var validationError = validateVoucherInput({
+        code: code,
+        name: namevoucher,
+        minAmount: minamount,
+        discount: discount,
+        startDate: from,
+        endDate: to,
+    });
+    if (validationError) {
+        toastr.warning(validationError);
+        return;
+    }
 
     var url = 'http://localhost:8080/api/voucher/admin/create';
     if (id != null) {
@@ -142,4 +177,40 @@ async function deleteVoucher(id) {
         var result = await response.json()
         toastr.warning(result.defaultMessage);
     }
+}
+
+// Client-side validation helpers
+function isPositiveNumber(val) {
+    if (val === null || val === undefined || val === '') return false;
+    var num = Number(val);
+    return Number.isFinite(num) && num >= 0;
+}
+
+function parseDate(val) {
+    if (!val) return null;
+    // Expect format yyyy-MM-dd from input[type=date]
+    var d = new Date(val);
+    return isNaN(d.getTime()) ? null : d;
+}
+
+function validateVoucherInput(v) {
+    // Required fields
+    if (!v.code || v.code.trim().length === 0) return "Mã voucher không được để trống";
+    if (!v.name || v.name.trim().length === 0) return "Tên voucher không được để trống";
+    if (!isPositiveNumber(v.minAmount)) return "Số tiền tối thiểu phải là số không âm";
+    if (!isPositiveNumber(v.discount)) return "Giảm giá phải là số không âm";
+
+    // Date validations
+    var start = parseDate(v.startDate);
+    var end = parseDate(v.endDate);
+    if (!start) return "Vui lòng chọn ngày bắt đầu hợp lệ";
+    if (!end) return "Vui lòng chọn ngày kết thúc hợp lệ";
+    if (start > end) return "Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc";
+
+    // Business rules (optional): discount should not exceed minAmount
+    var minAmountNum = Number(v.minAmount);
+    var discountNum = Number(v.discount);
+    if (discountNum > minAmountNum) return "Giảm giá không được lớn hơn Số tiền tối thiểu";
+
+    return null; // no error
 }

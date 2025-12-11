@@ -1,25 +1,36 @@
 const listFile = [];
 
-var size = 8;
+// page size
+var size = 10;
+
+// track current state for pagination
+var currentPage = 0;
+var currentParam = "";
+var currentListCate = null;
 async function loadProduct(page, param, listcate) {
+    // normalize and store current filters
     if (param == null) {
         param = "";
     }
+    currentPage = page || 0;
+    currentParam = param;
+    currentListCate = listcate || null;
+
     var result = null;
-    if (listcate == null) {
-        var url = 'http://localhost:8080/api/product/public/findByParam?page=' + page + '&size=' + size + '&q=' + param;
+    if (currentListCate == null) {
+        var url = 'http://localhost:8080/api/product/public/findByParam?page=' + currentPage + '&size=' + size + '&q=' + encodeURIComponent(currentParam);
         const response = await fetch(url, {
             method: 'GET'
         });
         result = await response.json();
     } else {
-        var url = 'http://localhost:8080/api/product/public/searchFull?page=' + page + '&size=' + size;
+        var url = 'http://localhost:8080/api/product/public/searchFull?page=' + currentPage + '&size=' + size;
         const response = await fetch(url, {
             method: 'POST',
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
-            body: JSON.stringify(listcate)
+            body: JSON.stringify(currentListCate)
         });
         result = await response.json();
     }
@@ -50,10 +61,21 @@ async function loadProduct(page, param, listcate) {
                 </tr>`
     }
     document.getElementById("listproduct").innerHTML = main
+    // build pagination with prev/next
     var mainpage = ''
+    var prevDisabled = currentPage <= 0 ? ' disabled' : '';
+    var nextDisabled = currentPage >= (totalPage - 1) ? ' disabled' : '';
+
+    mainpage += `<li class="page-item${prevDisabled}"><a class="page-link" href="#" onclick="${prevDisabled ? 'return false' : 'loadProduct(' + (currentPage - 1) + ', currentParam, currentListCate)'}">&laquo;</a></li>`;
+
     for (i = 1; i <= totalPage; i++) {
-        mainpage += `<li onclick="loadProduct(${(Number(i) - 1)},${param},${listcate})" class="page-item"><a class="page-link" href="#listsp">${i}</a></li>`
+        var pageIndex = i - 1;
+        var active = pageIndex === currentPage ? ' active' : '';
+        mainpage += `<li class="page-item${active}"><a class="page-link" href="#" onclick="loadProduct(${pageIndex}, currentParam, currentListCate)">${i}</a></li>`
     }
+
+    mainpage += `<li class="page-item${nextDisabled}"><a class="page-link" href="#" onclick="${nextDisabled ? 'return false' : 'loadProduct(' + (currentPage + 1) + ', currentParam, currentListCate)'}">&raquo;</a></li>`;
+
     document.getElementById("pageable").innerHTML = mainpage
 }
 
