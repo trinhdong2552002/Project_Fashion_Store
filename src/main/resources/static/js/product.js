@@ -215,21 +215,30 @@ async function clickColor(e, name, idColor) {
     const response = await fetch(url, {});
     var list = await response.json();
     var main = ''
+    var hasAvailable = false;
     for (i = 0; i < list.length; i++) {
-        if (list[i].quantity > 0) {
-            main += `<div class="colsize col-lg-2 col-md-2 col-sm-2 col-2">
-                        <label onclick="clickSize(this)" class="radio-custom" for="size${list[i].id}">${list[i].sizeName}
-                            <input value="${list[i].id}" type="radio" name="sizepro" id="size${list[i].id}">
-                        </label>
-                    </div>`
-        } else {
-            main += `<div class="colsize col-lg-2 col-md-2 col-sm-2 col-2">
-                        <label class="radio-custom disablesize" for="size${list[i].id}">${list[i].sizeName}
-                        </label>
-                    </div>`
-        }
+        var qty = Number(list[i].quantity);
+        var disabledClass = qty <= 0 ? ' disabled-size' : '';
+        var disabledAttr = qty <= 0 ? ' aria-disabled="true"' : '';
+        var opacityStyle = qty <= 0 ? ' style="opacity:0.5; pointer-events:none;"' : '';
+        var onClick = qty <= 0 ? '' : `onclick="clickSize(this)"`;
+        if (qty > 0) { hasAvailable = true; }
+        main += `<div class="colsize col-lg-2 col-md-2 col-sm-2 col-2">
+                    <label class="radio-custom${disabledClass}" ${onClick} ${disabledAttr} data-max="${qty}"${opacityStyle}>
+                        ${list[i].sizeName}
+                        <input type="radio" name="sizepro" value="${list[i].id}" />
+                    </label>
+                    ${qty <= 0 ? '<div class="size-out pt-2 text-muted">Số lượng đã hết</div>' : ''}
+                </div>`
     }
     document.getElementById("listsize").innerHTML = main;
+    // If at least one size available, auto-select first available
+    if (hasAvailable) {
+        var labels = document.querySelectorAll('#listsize .radio-custom:not(.disabled-size)');
+        if (labels.length > 0) {
+            clickSize(labels[0]);
+        }
+    }
 }
 
 async function clickImgdetail(e) {
@@ -249,14 +258,24 @@ function clickSize(e) {
     e.classList.add('activesize')
     var inp = e.getElementsByTagName('input')[0]
     inp.checked = 'checked'
+    // set max quantity for +/- controls based on selected size
+    var max = Number(e.getAttribute('data-max') || '0');
+    document.getElementById('inputslcart').setAttribute('data-max', String(max));
 }
 
 function upAndDownDetail(val) {
     var quan = document.getElementById("inputslcart").value;
+    var max = Number(document.getElementById('inputslcart').getAttribute('data-max') || '0');
     if (val < 0 && quan == 1) {
         return;
     }
-    document.getElementById("inputslcart").value = Number(quan) + Number(val)
+    var next = Number(quan) + Number(val);
+    if (max > 0 && next > max) {
+        toastr.warning('Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này');
+        return;
+    }
+    if (next <= 0) { next = 1; }
+    document.getElementById("inputslcart").value = next
 }
 
 

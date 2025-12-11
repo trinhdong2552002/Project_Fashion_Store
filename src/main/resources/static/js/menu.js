@@ -162,7 +162,7 @@ async function searchMenuMobile() {
 }
 
 function loadFooter() {
-  var foo = `<footer class="text-center text-lg-start text-muted">
+  var foo = `<footer class="text-center text-lg-start text-muted" style="background-color: #F9FAFB;">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <div class="me-5 d-none d-lg-block"><span>Theo dõi chúng tôi tại:</span></div>
         <div>
