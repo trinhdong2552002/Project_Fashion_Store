@@ -200,6 +200,9 @@ async function loadAProduct() {
                 </div>`
         }
         document.getElementById("listProductGy").innerHTML = main;
+
+        // attach quantity input validation after product loads
+        attachQtyInputValidation();
     }
 }
 
@@ -261,6 +264,13 @@ function clickSize(e) {
     // set max quantity for +/- controls based on selected size
     var max = Number(e.getAttribute('data-max') || '0');
     document.getElementById('inputslcart').setAttribute('data-max', String(max));
+    // ensure current input does not exceed max
+    var inpQuan = document.getElementById('inputslcart');
+    var cur = Number(inpQuan.value || '1');
+    if (max > 0 && cur > max) {
+        inpQuan.value = String(max);
+        toastr.warning('Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này');
+    }
 }
 
 function upAndDownDetail(val) {
@@ -276,6 +286,28 @@ function upAndDownDetail(val) {
     }
     if (next <= 0) { next = 1; }
     document.getElementById("inputslcart").value = next
+}
+
+// Validate manual input on quantity field to respect max/min
+function attachQtyInputValidation() {
+    var input = document.getElementById('inputslcart');
+    if (!input) return;
+    var handler = function() {
+        var max = Number(input.getAttribute('data-max') || '0');
+        var raw = String(input.value || '1');
+        // allow only digits
+        var digits = raw.replace(/\D/g, '');
+        if (digits === '') digits = '1';
+        var num = Number(digits);
+        if (num <= 0) num = 1;
+        if (max > 0 && num > max) {
+            num = max;
+            toastr.warning('Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này');
+        }
+        input.value = String(num);
+    };
+    input.addEventListener('input', handler);
+    input.addEventListener('blur', handler);
 }
 
 
